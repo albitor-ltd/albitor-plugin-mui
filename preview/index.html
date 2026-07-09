@@ -6,9 +6,13 @@
 <title>Material UI (MUI) — component preview</title>
 <style>
   /* ------------------------------------------------------------------
-     Self-contained Material UI (MUI) kitchen-sink preview.
+     Self-contained Material UI (MUI) preview.
      No build step, no external fonts/scripts/CDNs — opens from file://.
      Hand-rendered Material-styled markup approximating real MUI output.
+
+     Layout follows the shared preview comparison spec (PREVIEW-SPEC.md):
+     the same screen, sample data, and copy as the other Albitor
+     design-system previews, rendered with Material UI components.
      ------------------------------------------------------------------ */
   :root {
     --primary: #1976d2; --primary-dark: #1565c0; --primary-contrast: #fff;
@@ -57,8 +61,8 @@
   }
   .icon-btn:hover { background: rgba(255,255,255,0.12); }
   :root[data-theme="dark"] .icon-btn:hover { background: rgba(255,255,255,0.08); }
-  .badge { position: relative; }
-  .badge::after {
+  .badge-dot { position: relative; }
+  .badge-dot::after {
     content: "3"; position: absolute; top: 2px; right: 2px; background: var(--error);
     color: #fff; font-size: 11px; font-weight: 500; min-width: 18px; height: 18px;
     border-radius: 9px; display: flex; align-items: center; justify-content: center; padding: 0 4px;
@@ -78,7 +82,6 @@
   /* Paper / Card */
   .paper { background: var(--paper); border-radius: var(--radius); box-shadow: var(--sh1); }
   .card { background: var(--paper); border-radius: var(--radius); box-shadow: var(--sh1); overflow: hidden; }
-  .card-media { height: 120px; background: linear-gradient(135deg, var(--primary), var(--secondary)); }
   .card-body { padding: 16px; }
   .card-title { font-size: 1.25rem; font-weight: 500; margin: 0 0 8px; }
   .card-text { color: var(--text-2); margin: 0; font-size: .875rem; }
@@ -93,7 +96,6 @@
   }
   .btn-contained { background: var(--primary); color: var(--primary-contrast); box-shadow: var(--sh2); }
   .btn-contained:hover { background: var(--primary-dark); box-shadow: var(--sh4); }
-  .btn-contained.secondary { background: var(--secondary); }
   .btn-contained.error { background: var(--error); }
   .btn-outlined { background: transparent; color: var(--primary); border: 1px solid rgba(25,118,210,0.5); }
   :root[data-theme="dark"] .btn-outlined { border-color: rgba(144,202,249,0.5); }
@@ -103,11 +105,6 @@
   .btn:disabled { color: var(--text-dis); background: rgba(0,0,0,0.12); box-shadow: none; cursor: default; }
   :root[data-theme="dark"] .btn:disabled { background: rgba(255,255,255,0.12); }
   .btn:focus-visible { outline: 3px solid var(--info); outline-offset: 2px; }
-  .fab {
-    width: 56px; height: 56px; border-radius: 50%; background: var(--secondary); color: #fff;
-    border: 0; box-shadow: var(--sh8); cursor: pointer; font-size: 26px; line-height: 1;
-  }
-  .fab:hover { filter: brightness(1.05); }
 
   /* Text fields */
   .field { position: relative; display: inline-flex; flex-direction: column; min-width: 220px; margin-top: 8px; }
@@ -132,22 +129,20 @@
   .ctrl { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; margin-right: 8px;
     color: var(--text); font-size: 1rem; }
   .ctrl input { accent-color: var(--primary); width: 18px; height: 18px; }
-  .switch { position: relative; width: 34px; height: 14px; }
-  .switch input { position: absolute; opacity: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
-  .switch .track { position: absolute; inset: 0; background: rgba(0,0,0,0.38); border-radius: 7px; transition: .2s; }
-  .switch .thumb { position: absolute; top: -3px; left: 0; width: 20px; height: 20px; border-radius: 50%;
-    background: #fafafa; box-shadow: var(--sh1); transition: .2s; }
-  .switch input:checked ~ .track { background: rgba(25,118,210,0.5); }
-  .switch input:checked ~ .thumb { left: 14px; background: var(--primary); }
+  fieldset.group { border: 0; padding: 0; margin: 0; }
+  fieldset.group legend { font-size: .75rem; text-transform: uppercase; letter-spacing: .08em; color: var(--text-2); margin-bottom: 8px; padding: 0; }
+  fieldset.group .ctrl { display: flex; margin: 0 0 6px; }
 
   /* Chips */
   .chip { display: inline-flex; align-items: center; gap: 6px; height: 32px; padding: 0 12px;
     border-radius: 16px; background: rgba(0,0,0,0.08); color: var(--text); font-size: .8125rem; }
   :root[data-theme="dark"] .chip { background: rgba(255,255,255,0.16); }
   .chip.primary { background: var(--primary); color: var(--primary-contrast); }
+  .chip.info { background: var(--info); color: #fff; }
+  .chip.success { background: var(--success); color: #fff; }
+  .chip.warning { background: var(--warning); color: #fff; }
+  .chip.error { background: var(--error); color: #fff; }
   .chip.outlined { background: transparent; border: 1px solid var(--field-border); }
-  .chip .x { cursor: pointer; opacity: .7; font-weight: 700; }
-  .chip .x:hover { opacity: 1; }
 
   /* Tabs */
   .tabs { border-bottom: 1px solid var(--divider); display: flex; gap: 0; }
@@ -177,38 +172,24 @@
   .alert .ico { font-weight: 700; }
   .alert.success { background: #edf7ed; color: #1e4620; }
   .alert.info { background: #e5f6fd; color: #014361; }
-  .alert.warning { background: #fff4e5; color: #663c00; }
   .alert.error { background: #fdeded; color: #5f2120; }
   :root[data-theme="dark"] .alert.success { background: rgba(102,187,106,.15); color: #a3d9a5; }
   :root[data-theme="dark"] .alert.info { background: rgba(41,182,246,.15); color: #a9dcf5; }
-  :root[data-theme="dark"] .alert.warning { background: rgba(255,167,38,.15); color: #ffcc80; }
   :root[data-theme="dark"] .alert.error { background: rgba(244,67,54,.15); color: #f4b6b0; }
   .alert strong { display: block; }
 
-  /* Progress */
-  .linear { height: 4px; background: rgba(25,118,210,0.3); border-radius: 2px; overflow: hidden; }
-  .linear .bar { height: 100%; width: 62%; background: var(--primary); }
-  .spinner { width: 40px; height: 40px; border-radius: 50%;
-    border: 4px solid rgba(25,118,210,0.25); border-top-color: var(--primary);
-    animation: spin 1.1s linear infinite; }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  @media (prefers-reduced-motion: reduce) { .spinner { animation: none; } }
-
-  /* List */
-  ul.mui-list { list-style: none; margin: 0; padding: 8px 0; background: var(--paper);
-    border-radius: var(--radius); box-shadow: var(--sh1); }
-  ul.mui-list li { display: flex; align-items: center; gap: 16px; padding: 8px 16px; }
-  ul.mui-list li.item { cursor: pointer; }
-  ul.mui-list li.item:hover { background: var(--hover); }
-  .list-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--secondary);
-    color: #fff; display: flex; align-items: center; justify-content: center; font-size: .9rem; font-weight: 500; }
-  .list-primary { font-size: 1rem; }
-  .list-secondary { font-size: .875rem; color: var(--text-2); }
+  /* Empty state */
+  .empty { text-align: center; padding: 48px 24px; }
+  .empty .glyph { width: 56px; height: 56px; border-radius: 50%; background: var(--hover);
+    color: var(--text-2); display: inline-flex; align-items: center; justify-content: center;
+    font-size: 26px; margin-bottom: 16px; }
+  .empty h3 { margin: 0 0 6px; font-size: 1.25rem; font-weight: 500; }
+  .empty p { margin: 0 0 20px; color: var(--text-2); font-size: .875rem; }
 
   /* Dialog */
-  .backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: none;
-    align-items: center; justify-content: center; z-index: 100; padding: 16px; }
-  .backdrop.open { display: flex; }
+  .dialog-frame { display: flex; justify-content: center; padding: 28px 16px; background: rgba(0,0,0,0.06);
+    border-radius: var(--radius); }
+  :root[data-theme="dark"] .dialog-frame { background: rgba(0,0,0,0.3); }
   .dialog { background: var(--paper); color: var(--text); border-radius: var(--radius);
     box-shadow: var(--sh24); max-width: 440px; width: 100%; }
   .dialog h3 { margin: 0; padding: 16px 24px; font-size: 1.25rem; font-weight: 500; }
@@ -220,11 +201,12 @@
 </style>
 </head>
 <body>
+  <!-- 1. Page header / title bar -->
   <header class="appbar">
     <div class="toolbar">
       <button class="icon-btn" type="button" aria-label="Open navigation menu">&#9776;</button>
-      <span class="title">Material UI preview</span>
-      <button class="icon-btn badge" type="button" aria-label="Notifications, 3 unread">&#9993;</button>
+      <span class="title">Northwind</span>
+      <button class="icon-btn badge-dot" type="button" aria-label="Notifications, 3 unread">&#9993;</button>
       <button class="icon-btn" type="button" id="themeToggle" aria-label="Toggle light or dark theme">&#9681;</button>
       <button class="icon-btn" type="button" aria-label="Account">&#128100;</button>
     </div>
@@ -232,119 +214,87 @@
 
   <main class="container">
     <h1 class="page">Component preview</h1>
-    <p class="lead">A self-contained, static showcase of the core Material UI (MUI) components on the
-      Material colour, type, elevation, and spacing scales. This page opens directly in a browser with no
-      build step. The real components (from <code>@mui/material</code>) are the source of truth — this is a
-      visual reference. Toggle the theme with the &#9681; button in the app bar.</p>
+    <p class="lead">A self-contained, static rendering of the shared preview comparison spec using
+      Material UI (MUI) components on the Material colour, type, elevation, and spacing scales. Same
+      screen and sample data as the other Albitor design-system previews. The real components (from
+      <code>@mui/material</code>) are the source of truth. Toggle the theme with the &#9681; button in the app bar.</p>
 
+    <!-- 2. Buttons -->
     <section aria-labelledby="s-buttons">
       <h2 class="section" id="s-buttons">Buttons</h2>
-      <p class="overline">Button &middot; IconButton &middot; Fab</p>
+      <p class="overline">Button</p>
       <div class="row">
-        <button class="btn btn-contained" type="button">Contained</button>
-        <button class="btn btn-outlined" type="button">Outlined</button>
-        <button class="btn btn-text" type="button">Text</button>
-        <button class="btn btn-contained secondary" type="button">Secondary</button>
-        <button class="btn btn-contained error" type="button">Error</button>
-        <button class="btn btn-contained" type="button" disabled>Disabled</button>
-        <button class="fab" type="button" aria-label="Add">&#43;</button>
+        <button class="btn btn-contained" type="button">Save changes</button>
+        <button class="btn btn-outlined" type="button">Cancel</button>
+        <button class="btn btn-contained error" type="button">Delete account</button>
+        <button class="btn btn-contained" type="button" disabled>Submitting…</button>
       </div>
     </section>
 
+    <!-- 3. Form fields -->
     <section aria-labelledby="s-fields">
-      <h2 class="section" id="s-fields">Text fields &amp; selects</h2>
-      <p class="overline">TextField &middot; Select</p>
-      <div class="row">
-        <span class="field focused">
-          <label>Full name</label>
-          <input type="text" value="Ada Lovelace" autocomplete="name" aria-label="Full name">
-        </span>
+      <h2 class="section" id="s-fields">Form fields</h2>
+      <p class="overline">TextField &middot; Select &middot; Checkbox &middot; Radio</p>
+      <div class="row" style="align-items:flex-start">
         <span class="field">
-          <label>Email</label>
-          <input type="email" placeholder="you@example.com" autocomplete="email" aria-label="Email">
-          <span class="helper">We&rsquo;ll never share it.</span>
+          <label>Full name</label>
+          <input type="text" placeholder="Ada Lovelace" autocomplete="name" aria-label="Full name">
         </span>
         <span class="field err">
-          <label>Password</label>
-          <input type="password" value="123" aria-label="Password" aria-describedby="pw-help">
-          <span class="helper" id="pw-help">Must be at least 8 characters.</span>
+          <label>Email address</label>
+          <input type="email" value="ada@" aria-label="Email address" aria-invalid="true" aria-describedby="email-help">
+          <span class="helper" id="email-help">Enter a valid email address, for example name@example.com</span>
         </span>
         <span class="field">
           <label>Country</label>
           <select aria-label="Country">
-            <option>United Kingdom</option>
+            <option selected>United Kingdom</option>
             <option>France</option>
             <option>Germany</option>
           </select>
         </span>
       </div>
-    </section>
-
-    <section aria-labelledby="s-selection">
-      <h2 class="section" id="s-selection">Selection controls</h2>
-      <p class="overline">Checkbox &middot; Radio &middot; Switch</p>
-      <div class="row">
-        <label class="ctrl"><input type="checkbox" checked> Notifications</label>
-        <label class="ctrl"><input type="checkbox"> Newsletter</label>
-        <span aria-hidden="true" style="width:16px"></span>
-        <label class="ctrl"><input type="radio" name="plan" checked> Free</label>
-        <label class="ctrl"><input type="radio" name="plan"> Pro</label>
-        <span aria-hidden="true" style="width:16px"></span>
-        <label class="ctrl">
-          <span class="switch"><input type="checkbox" checked aria-label="Dark mode setting"><span class="track"></span><span class="thumb"></span></span>
-          Dark mode
-        </label>
+      <div class="row" style="margin-top:24px; gap:48px; align-items:flex-start">
+        <fieldset class="group">
+          <legend>Notifications</legend>
+          <label class="ctrl"><input type="checkbox" checked> Email</label>
+          <label class="ctrl"><input type="checkbox"> SMS</label>
+          <label class="ctrl"><input type="checkbox"> Push</label>
+        </fieldset>
+        <fieldset class="group">
+          <legend>Plan</legend>
+          <label class="ctrl"><input type="radio" name="plan"> Free</label>
+          <label class="ctrl"><input type="radio" name="plan" checked> Pro</label>
+          <label class="ctrl"><input type="radio" name="plan"> Enterprise</label>
+        </fieldset>
       </div>
     </section>
 
-    <section aria-labelledby="s-chips">
-      <h2 class="section" id="s-chips">Chips</h2>
-      <p class="overline">Chip</p>
-      <div class="row">
-        <span class="chip">Default</span>
-        <span class="chip primary">Primary</span>
-        <span class="chip outlined">Outlined</span>
-        <span class="chip">Deletable <span class="x" role="button" tabindex="0" aria-label="Remove Deletable">&times;</span></span>
+    <!-- 4. Data table -->
+    <section aria-labelledby="s-table">
+      <h2 class="section" id="s-table">Data table</h2>
+      <p class="overline">Table &middot; (MUI X DataGrid for large/interactive data)</p>
+      <div class="table-wrap">
+        <table class="mui">
+          <caption>Recent orders</caption>
+          <thead>
+            <tr><th scope="col">Order</th><th scope="col">Customer</th><th scope="col">Status</th><th scope="col" class="num">Amount</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>ORD-1001</td><td>Northwind Ltd</td><td><span class="chip success" style="height:24px">Paid</span></td><td class="num">£1,240.00</td></tr>
+            <tr><td>ORD-1002</td><td>Acme Co</td><td><span class="chip warning" style="height:24px">Pending</span></td><td class="num">£530.50</td></tr>
+            <tr><td>ORD-1003</td><td>Globex</td><td><span class="chip error" style="height:24px">Overdue</span></td><td class="num">£98.00</td></tr>
+          </tbody>
+        </table>
       </div>
     </section>
 
-    <section aria-labelledby="s-cards">
-      <h2 class="section" id="s-cards">Cards</h2>
-      <p class="overline">Card &middot; CardMedia &middot; CardActions</p>
-      <div class="grid">
-        <article class="card">
-          <div class="card-media" role="img" aria-label="Decorative gradient"></div>
-          <div class="card-body">
-            <h3 class="card-title">Project Atlas</h3>
-            <p class="card-text">A short supporting description that sits inside the card content region.</p>
-          </div>
-          <div class="card-actions">
-            <button class="btn btn-text" type="button">Share</button>
-            <button class="btn btn-text" type="button">Learn more</button>
-          </div>
-        </article>
-        <article class="card">
-          <div class="card-media" role="img" aria-label="Decorative gradient"></div>
-          <div class="card-body">
-            <h3 class="card-title">Quarterly report</h3>
-            <p class="card-text">Cards group related content and actions on a single elevated surface.</p>
-          </div>
-          <div class="card-actions">
-            <button class="btn btn-text" type="button">Open</button>
-          </div>
-        </article>
-        <article class="paper" style="padding:16px">
-          <h3 class="card-title">Paper</h3>
-          <p class="card-text">Paper is the base elevated surface many components build on.</p>
-        </article>
-      </div>
-    </section>
-
+    <!-- 5. Tabs -->
     <section aria-labelledby="s-tabs">
       <h2 class="section" id="s-tabs">Tabs</h2>
       <p class="overline">Tabs</p>
       <div class="paper" style="padding:0 8px">
-        <div class="tabs" role="tablist" aria-label="Sample tabs">
+        <div class="tabs" role="tablist" aria-label="Record view">
           <button class="tab" role="tab" id="tab-1" aria-controls="panel-1" aria-selected="true">Overview</button>
           <button class="tab" role="tab" id="tab-2" aria-controls="panel-2" aria-selected="false">Activity</button>
           <button class="tab" role="tab" id="tab-3" aria-controls="panel-3" aria-selected="false">Settings</button>
@@ -353,7 +303,7 @@
           Overview content. Tabs switch between equivalent views of the same screen.
         </div>
         <div class="tabpanel" role="tabpanel" id="panel-2" aria-labelledby="tab-2" hidden>
-          Activity content. Keyboard arrow keys move between tabs in the real component.
+          Activity content.
         </div>
         <div class="tabpanel" role="tabpanel" id="panel-3" aria-labelledby="tab-3" hidden>
           Settings content.
@@ -361,68 +311,76 @@
       </div>
     </section>
 
-    <section aria-labelledby="s-table">
-      <h2 class="section" id="s-table">Data table</h2>
-      <p class="overline">Table &middot; (MUI X DataGrid for large/interactive data)</p>
-      <div class="table-wrap">
-        <table class="mui">
-          <caption>Recent invoices</caption>
-          <thead>
-            <tr><th scope="col">Invoice</th><th scope="col">Customer</th><th scope="col">Status</th><th scope="col" class="num">Amount</th></tr>
-          </thead>
-          <tbody>
-            <tr><td>INV-1024</td><td>Northwind Ltd</td><td><span class="chip primary" style="height:24px">Paid</span></td><td class="num">&pound;1,240.00</td></tr>
-            <tr><td>INV-1025</td><td>Acme Co</td><td><span class="chip outlined" style="height:24px">Pending</span></td><td class="num">&pound;530.50</td></tr>
-            <tr><td>INV-1026</td><td>Globex</td><td><span class="chip" style="height:24px">Draft</span></td><td class="num">&pound;98.00</td></tr>
-          </tbody>
-        </table>
+    <!-- 6. Card -->
+    <section aria-labelledby="s-cards">
+      <h2 class="section" id="s-cards">Card</h2>
+      <p class="overline">Card &middot; CardContent &middot; CardActions</p>
+      <div class="grid">
+        <article class="card">
+          <div class="card-body">
+            <h3 class="card-title">Project Atlas</h3>
+            <p class="card-text">A short supporting description that sits inside the card content region.</p>
+          </div>
+          <div class="card-actions">
+            <button class="btn btn-text" type="button">View details</button>
+          </div>
+        </article>
       </div>
     </section>
 
-    <section aria-labelledby="s-feedback">
-      <h2 class="section" id="s-feedback">Alerts &amp; progress</h2>
-      <p class="overline">Alert &middot; LinearProgress &middot; CircularProgress</p>
-      <div style="display:grid; gap:12px; max-width:640px">
-        <div class="alert success"><span class="ico" aria-hidden="true">&#10003;</span><span><strong>Success</strong>Your changes have been saved.</span></div>
-        <div class="alert info"><span class="ico" aria-hidden="true">&#9432;</span><span><strong>Info</strong>A new version is available.</span></div>
-        <div class="alert warning"><span class="ico" aria-hidden="true">&#9888;</span><span><strong>Warning</strong>Your trial ends in 3 days.</span></div>
-        <div class="alert error"><span class="ico" aria-hidden="true">&#10006;</span><span><strong>Error</strong>Could not connect to the server.</span></div>
-      </div>
-      <div class="row" style="margin-top:16px; max-width:640px">
-        <div class="linear" style="flex:1; min-width:200px" role="progressbar" aria-label="Loading" aria-valuenow="62" aria-valuemin="0" aria-valuemax="100"><div class="bar"></div></div>
-        <div class="spinner" role="progressbar" aria-label="Loading"></div>
-      </div>
-    </section>
-
-    <section aria-labelledby="s-list">
-      <h2 class="section" id="s-list">List</h2>
-      <p class="overline">List &middot; ListItemButton &middot; Avatar</p>
-      <ul class="mui-list" style="max-width:480px">
-        <li class="item"><span class="list-avatar" aria-hidden="true">AL</span><span><span class="list-primary">Ada Lovelace</span><br><span class="list-secondary">Owner &middot; last active 2h ago</span></span></li>
-        <li class="item"><span class="list-avatar" aria-hidden="true" style="background:var(--info)">GH</span><span><span class="list-primary">Grace Hopper</span><br><span class="list-secondary">Editor</span></span></li>
-        <li class="item"><span class="list-avatar" aria-hidden="true" style="background:var(--success)">AT</span><span><span class="list-primary">Alan Turing</span><br><span class="list-secondary">Viewer</span></span></li>
-      </ul>
-    </section>
-
+    <!-- 7. Dialog (static example) -->
     <section aria-labelledby="s-dialog">
       <h2 class="section" id="s-dialog">Dialog</h2>
-      <p class="overline">Dialog &middot; AppBar (top of page)</p>
-      <button class="btn btn-contained" type="button" id="openDialog">Open dialog</button>
-      <p class="note">The real <code>Dialog</code> traps focus, closes on Esc/backdrop, and is labelled with
+      <p class="overline">Dialog</p>
+      <div class="dialog-frame">
+        <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="dlg-title" aria-describedby="dlg-desc">
+          <h3 id="dlg-title">Delete account?</h3>
+          <div class="content" id="dlg-desc">This permanently removes your account and all associated data. This action cannot be undone.</div>
+          <div class="actions">
+            <button class="btn btn-text" type="button">Cancel</button>
+            <button class="btn btn-contained error" type="button">Delete account</button>
+          </div>
+        </div>
+      </div>
+      <p class="note">Static example. The real <code>Dialog</code> traps focus, closes on Esc/backdrop, and is labelled with
         <code>aria-labelledby</code>/<code>aria-describedby</code>.</p>
     </section>
-  </main>
 
-  <div class="backdrop" id="dialogBackdrop">
-    <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="dlg-title" aria-describedby="dlg-desc">
-      <h3 id="dlg-title">Delete this project?</h3>
-      <div class="content" id="dlg-desc">This action cannot be undone. All associated data will be permanently removed.</div>
-      <div class="actions">
-        <button class="btn btn-text" type="button" data-close>Cancel</button>
-        <button class="btn btn-contained error" type="button" data-close>Delete</button>
+    <!-- 8. Notification / alert set -->
+    <section aria-labelledby="s-feedback">
+      <h2 class="section" id="s-feedback">Alerts</h2>
+      <p class="overline">Alert</p>
+      <div style="display:grid; gap:12px; max-width:640px">
+        <div class="alert info"><span class="ico" aria-hidden="true">&#9432;</span><span><strong>Information</strong>A new version is available.</span></div>
+        <div class="alert success"><span class="ico" aria-hidden="true">&#10003;</span><span><strong>Success</strong>Your changes have been saved.</span></div>
+        <div class="alert error"><span class="ico" aria-hidden="true">&#10006;</span><span><strong>Error</strong>Could not connect to the server.</span></div>
       </div>
-    </div>
-  </div>
+    </section>
+
+    <!-- 9. Empty state -->
+    <section aria-labelledby="s-empty">
+      <h2 class="section" id="s-empty">Empty state</h2>
+      <p class="overline">Paper &middot; Button</p>
+      <div class="paper empty" style="max-width:480px">
+        <span class="glyph" aria-hidden="true">&#128230;</span>
+        <h3>No orders yet</h3>
+        <p>When you create your first order, it will appear here.</p>
+        <button class="btn btn-contained" type="button">Create order</button>
+      </div>
+    </section>
+
+    <!-- 10. Chips -->
+    <section aria-labelledby="s-chips">
+      <h2 class="section" id="s-chips">Chips</h2>
+      <p class="overline">Chip</p>
+      <div class="row">
+        <span class="chip info">Active</span>
+        <span class="chip success">Complete</span>
+        <span class="chip warning">Pending</span>
+        <span class="chip error">Failed</span>
+      </div>
+    </section>
+  </main>
 
   <script>
     // Theme toggle
@@ -447,20 +405,6 @@
             document.getElementById(t.getAttribute('aria-controls')).hidden = !selected;
           });
         });
-      });
-    })();
-
-    // Dialog
-    (function () {
-      var backdrop = document.getElementById('dialogBackdrop');
-      document.getElementById('openDialog').addEventListener('click', function () {
-        backdrop.classList.add('open');
-      });
-      backdrop.addEventListener('click', function (e) {
-        if (e.target === backdrop || e.target.hasAttribute('data-close')) backdrop.classList.remove('open');
-      });
-      document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') backdrop.classList.remove('open');
       });
     })();
   </script>
