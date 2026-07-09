@@ -69,7 +69,9 @@
   }
 
   /* Layout */
-  .container { max-width: 1152px; margin: 0 auto; padding: 32px 16px 64px; }
+  /* Shared preview skeleton: a single 960px centred content column with a
+     consistent 24px gutter, matched across all four Albitor DS previews. */
+  .container { max-width: 960px; margin: 0 auto; padding: 32px 24px 64px; }
   .lead { color: var(--text-2); max-width: 62ch; margin: 0 0 32px; }
   h1.page { font-size: 2.125rem; font-weight: 400; margin: 0 0 4px; letter-spacing: .0025em; }
   section { margin: 40px 0 0; }
@@ -78,6 +80,16 @@
     font-weight: 500; color: var(--text-2); margin: 0 0 16px; }
   .row { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
   .grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+
+  /* Two-column form layout, shared across the four previews:
+     inputs on the left, selection controls on the right. */
+  .preview-form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px 40px; align-items: start; }
+  .preview-fields { display: flex; flex-direction: column; gap: 16px; padding-top: 8px; }
+  .preview-fields .field { display: flex; width: 100%; margin-top: 0; }
+  .preview-controls { display: flex; flex-direction: column; gap: 24px; }
+  /* Narrow surfaces (card + dialog) share one max-width across the four. */
+  .preview-narrow { max-width: 480px; }
 
   /* Paper / Card */
   .paper { background: var(--paper); border-radius: var(--radius); box-shadow: var(--sh1); }
@@ -186,12 +198,10 @@
   .empty h3 { margin: 0 0 6px; font-size: 1.25rem; font-weight: 500; }
   .empty p { margin: 0 0 20px; color: var(--text-2); font-size: .875rem; }
 
-  /* Dialog */
-  .dialog-frame { display: flex; justify-content: center; padding: 28px 16px; background: rgba(0,0,0,0.06);
-    border-radius: var(--radius); }
-  :root[data-theme="dark"] .dialog-frame { background: rgba(0,0,0,0.3); }
+  /* Dialog — left-aligned narrow surface, shared skeleton */
+  .dialog-frame { display: block; }
   .dialog { background: var(--paper); color: var(--text); border-radius: var(--radius);
-    box-shadow: var(--sh24); max-width: 440px; width: 100%; }
+    box-shadow: var(--sh24); max-width: 480px; }
   .dialog h3 { margin: 0; padding: 16px 24px; font-size: 1.25rem; font-weight: 500; }
   .dialog .content { padding: 0 24px 20px; color: var(--text-2); font-size: 1rem; }
   .dialog .actions { display: flex; justify-content: flex-end; gap: 8px; padding: 8px; }
@@ -235,38 +245,40 @@
     <section aria-labelledby="s-fields">
       <h2 class="section" id="s-fields">Form fields</h2>
       <p class="overline">TextField &middot; Select &middot; Checkbox &middot; Radio</p>
-      <div class="row" style="align-items:flex-start">
-        <span class="field">
-          <label>Full name</label>
-          <input type="text" placeholder="Ada Lovelace" autocomplete="name" aria-label="Full name">
-        </span>
-        <span class="field err">
-          <label>Email address</label>
-          <input type="email" value="ada@" aria-label="Email address" aria-invalid="true" aria-describedby="email-help">
-          <span class="helper" id="email-help">Enter a valid email address, for example name@example.com</span>
-        </span>
-        <span class="field">
-          <label>Country</label>
-          <select aria-label="Country">
-            <option selected>United Kingdom</option>
-            <option>France</option>
-            <option>Germany</option>
-          </select>
-        </span>
-      </div>
-      <div class="row" style="margin-top:24px; gap:48px; align-items:flex-start">
-        <fieldset class="group">
-          <legend>Notifications</legend>
-          <label class="ctrl"><input type="checkbox" checked> Email</label>
-          <label class="ctrl"><input type="checkbox"> SMS</label>
-          <label class="ctrl"><input type="checkbox"> Push</label>
-        </fieldset>
-        <fieldset class="group">
-          <legend>Plan</legend>
-          <label class="ctrl"><input type="radio" name="plan"> Free</label>
-          <label class="ctrl"><input type="radio" name="plan" checked> Pro</label>
-          <label class="ctrl"><input type="radio" name="plan"> Enterprise</label>
-        </fieldset>
+      <div class="preview-form-grid">
+        <div class="preview-fields">
+          <span class="field">
+            <label>Full name</label>
+            <input type="text" placeholder="Ada Lovelace" autocomplete="name" aria-label="Full name">
+          </span>
+          <span class="field err">
+            <label>Email address</label>
+            <input type="email" value="ada@" aria-label="Email address" aria-invalid="true" aria-describedby="email-help">
+            <span class="helper" id="email-help">Enter a valid email address, for example name@example.com</span>
+          </span>
+          <span class="field">
+            <label>Country</label>
+            <select aria-label="Country">
+              <option selected>United Kingdom</option>
+              <option>France</option>
+              <option>Germany</option>
+            </select>
+          </span>
+        </div>
+        <div class="preview-controls">
+          <fieldset class="group">
+            <legend>Notifications</legend>
+            <label class="ctrl"><input type="checkbox" checked> Email</label>
+            <label class="ctrl"><input type="checkbox"> SMS</label>
+            <label class="ctrl"><input type="checkbox"> Push</label>
+          </fieldset>
+          <fieldset class="group">
+            <legend>Plan</legend>
+            <label class="ctrl"><input type="radio" name="plan"> Free</label>
+            <label class="ctrl"><input type="radio" name="plan" checked> Pro</label>
+            <label class="ctrl"><input type="radio" name="plan"> Enterprise</label>
+          </fieldset>
+        </div>
       </div>
     </section>
 
@@ -315,7 +327,7 @@
     <section aria-labelledby="s-cards">
       <h2 class="section" id="s-cards">Card</h2>
       <p class="overline">Card &middot; CardContent &middot; CardActions</p>
-      <div class="grid">
+      <div class="preview-narrow">
         <article class="card">
           <div class="card-body">
             <h3 class="card-title">Project Atlas</h3>
@@ -350,7 +362,7 @@
     <section aria-labelledby="s-feedback">
       <h2 class="section" id="s-feedback">Alerts</h2>
       <p class="overline">Alert</p>
-      <div style="display:grid; gap:12px; max-width:640px">
+      <div style="display:grid; gap:12px">
         <div class="alert info"><span class="ico" aria-hidden="true">&#9432;</span><span><strong>Information</strong>A new version is available.</span></div>
         <div class="alert success"><span class="ico" aria-hidden="true">&#10003;</span><span><strong>Success</strong>Your changes have been saved.</span></div>
         <div class="alert error"><span class="ico" aria-hidden="true">&#10006;</span><span><strong>Error</strong>Could not connect to the server.</span></div>
@@ -361,7 +373,7 @@
     <section aria-labelledby="s-empty">
       <h2 class="section" id="s-empty">Empty state</h2>
       <p class="overline">Paper &middot; Button</p>
-      <div class="paper empty" style="max-width:480px">
+      <div class="paper empty">
         <span class="glyph" aria-hidden="true">&#128230;</span>
         <h3>No orders yet</h3>
         <p>When you create your first order, it will appear here.</p>
