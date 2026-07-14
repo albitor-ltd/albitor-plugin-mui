@@ -1,6 +1,8 @@
 ---
 name: mui-design-system
 description: Use when building, reviewing, or discussing a Material UI (MUI) frontend — any React UI that should follow Material Design via the MUI component library. Covers the full MUI component inventory (inputs, data display, feedback, surfaces, navigation, layout, plus MUI X data grid / date pickers / charts), common app patterns, the Material colour / typography / spacing / elevation / shape system and theming, and how to consume MUI (installation, ThemeProvider, sx / styled, theme tokens) with sensible defaults.
+metadata:
+  capability: design-system
 ---
 
 # Material UI (MUI)
