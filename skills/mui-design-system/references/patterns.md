@@ -20,6 +20,8 @@ The standard desktop app frame: a fixed `AppBar` (menu `IconButton` with `aria-l
 
 ### Breadcrumbs and page hierarchy
 Use `Breadcrumbs` with real `Link`s to show where a page sits; mark the current page as plain text. Don't combine breadcrumbs with a redundant "back" control that does the same thing.
+- **Human labels over raw IDs:** in breadcrumbs, tables, and detail headers show friendly, human-readable names ("Speaker 1", not `spk_0`); keep the raw identifier for the route param or API call, never as the visible label.
+- **Keep the document title in sync:** update `document.title` on client-side navigation (React Router / TanStack Router) so the browser tab and history reflect the current page or record, not the initial app title.
 
 ### Tabs vs stepper
 `Tabs` switch between equivalent views of the same screen. `Stepper` is for a sequential multi-step flow (e.g. checkout) — show step status in text, keep steps reachable, and validate each step before advancing.
@@ -64,6 +66,7 @@ Transient success/info → `Snackbar` (auto-dismiss, short). Persistent, in-cont
 - **Loading:** `Skeleton` shaped like the incoming content (calmer than a spinner) or `CircularProgress`/`LinearProgress` for actions; use `Backdrop` for a blocking load.
 - **Empty:** an explanatory `Typography` + an icon + a primary action ("Create your first…"), not a blank screen.
 - **Error:** an `Alert severity="error"` (or an error page) that says what happened and offers a retry; don't lose the user's input.
+- **Async status without a manual refresh:** a resource in an async processing state ("processing" → "completed") should update itself — poll/refetch (or subscribe over WebSocket/SSE) so the `DataGrid`, list, or detail reflects completion in place, without the user leaving and returning or reloading. Announce the change (a `Snackbar` or an updated status `Chip`, 4.1.3).
 
 ## Account and settings
 

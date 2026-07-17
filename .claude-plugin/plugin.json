@@ -1,7 +1,7 @@
 {
   "name": "mui",
   "displayName": "Material UI (MUI)",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Build, audit, and preview Material UI (MUI) interfaces: the MUI component library and Material Design foundations (colour, type, spacing, elevation, theming), plus WCAG 2.2 AA accessibility for consumer and general-purpose web apps.",
   "author": {
     "name": "Albitor Ltd",
