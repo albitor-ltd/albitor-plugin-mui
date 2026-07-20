@@ -1,8 +1,10 @@
 # Material UI (MUI) plugin (`mui`)
 
-A [Claude Code plugin](https://code.claude.com/docs/en/plugins) that helps you build, audit, and preview **Material UI (MUI)** interfaces — the React component library that implements Google's **Material Design**. It packages the MUI component inventory and Material system (colour, type, spacing, elevation, theming) plus **WCAG 2.2 AA accessibility** into skills, commands, an audit agent, an advisory hook, and a self-contained preview page.
+A [Claude Code plugin](https://code.claude.com/docs/en/plugins) that helps you build, audit, and preview **Material Design** interfaces — implemented with the Material component library that fits the app's framework, the app keeping its own framework. It packages the shared Material system (colour, type, spacing, elevation, theming) and component inventory plus **WCAG 2.2 AA accessibility** into skills, commands, an audit agent, an advisory hook, and a self-contained preview page.
 
-MUI is the **default design system for consumer and general-purpose web apps**: broad, familiar, batteries-included, MIT-licensed, and free to theme to your own brand. This plugin is one of the design-system plugins Albitor makes available to its users; the reference content is distilled from the live MUI and Material Design docs and bundled so the assistant has authoritative material to hand (see [Licensing](#licensing)).
+**Material Design is the design language; the library depends on the framework:** **Svelte / SvelteKit** (the default app template) → **SMUI** (Svelte Material UI) or **m3-svelte** (Material 3); **React / Next.js** → **@mui/material** (MUI); extensible to Vue/Angular/web components. The pack does **not** flip a Svelte app to React to "get MUI" — see `skills/mui-design-system/references/frontend-conventions.md`.
+
+Material is the **default design system for consumer and general-purpose web apps**: broad, familiar, batteries-included, MIT-licensed, and free to theme to your own brand. This plugin is one of the design-system plugins Albitor makes available to its users; the reference content is distilled from the live MUI, SMUI, m3-svelte, and Material Design docs and bundled so the assistant has authoritative material to hand (see [Licensing](#licensing)).
 
 ## What's inside
 
@@ -10,14 +12,14 @@ MUI is the **default design system for consumer and general-purpose web apps**: 
 
 | Skill | Triggers on | Bundled references |
 | --- | --- | --- |
-| `mui:mui-design-system` | Building/reviewing a Material UI / React frontend | The MUI component inventory (inputs, data display, feedback, surfaces, navigation, layout, utils + MUI X data grid / pickers / charts), common app patterns, the Material colour/type/spacing/elevation/shape system, and how to consume MUI |
+| `mui:mui-design-system` | Building/reviewing a Material Design frontend (any framework) | The shared Material system (colour/type/spacing/elevation/shape/theming), the Material component inventory (inputs, data display, feedback, surfaces, navigation, layout, utils + MUI X data grid / pickers / charts), common app patterns, and how to consume Material per framework (Svelte SMUI/m3-svelte, React @mui/material) |
 | `mui:mui-accessibility` | Building/testing/advising on accessibility | All 50 WCAG 2.2 A/AA criteria (with MUI-specific how-to-meet notes), how to test, and a consumer-product accessibility-statement template |
 
 ### Commands
 
 | Command | Does |
 | --- | --- |
-| `/mui:component [name or need]` | Look up or scaffold an MUI component — idiomatic React snippet with theme tokens and accessibility notes. |
+| `/mui:component [name or need]` | Look up or scaffold a Material component in the app's framework (Svelte SMUI/m3-svelte or React MUI) — idiomatic snippet with theme tokens and accessibility notes. |
 | `/mui:audit [target]` | WCAG 2.2 AA audit of a file, component, or the current changes; prioritised findings. |
 | `/mui:review [target]` | Review frontend changes against **both** correct MUI usage and WCAG 2.2 AA. |
 | `/mui:accessibility-statement [details]` | Draft an accessibility statement for a consumer/general-purpose product. |
@@ -58,9 +60,11 @@ claude plugin validate /path/to/albitor-plugin-mui
 
 ## Keeping it current
 
-The bundled references are a distilled snapshot, not a live mirror. MUI and Material Design change (the Grid API, the styling engine defaults, and theme options have shifted across MUI v4→v7), so the skills always tell the assistant to confirm exact, current detail against the live sources:
+The bundled references are a distilled snapshot, not a live mirror. Material and its libraries change (MUI's Grid/styling/theme API shifted across v4→v7; SMUI moved off the deprecated MDC-Web at v9; m3-svelte moves quickly), so the skills always tell the assistant to confirm exact, current detail against the live sources:
 
-- Material UI (MUI) — <https://mui.com/>
+- Material UI (MUI, React) — <https://mui.com/>
+- Svelte Material UI (SMUI) — <https://sveltematerialui.com/>
+- m3-svelte (Material 3 for Svelte) — <https://github.com/KTibow/m3-svelte>
 - Material Design — <https://m3.material.io/>
 - WCAG 2.2 — <https://www.w3.org/TR/WCAG22/>
 

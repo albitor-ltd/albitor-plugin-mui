@@ -1,12 +1,16 @@
 Source: Material UI (MUI) documentation (https://mui.com/) and Material Design (https://m3.material.io/, https://m2.material.io/). MUI is MIT-licensed; Material Design is © Google. Distilled reference — verify against the live source for current detail.
 
-# Material UI (MUI) styles: the Material system and theming
+# Material styles: the shared Material system and theming
 
-Covers colour and modes, typography, spacing, elevation/shadows, shape, breakpoints, and the theme object. The golden rule: **set these once in a theme and consume tokens** (`theme.palette.*`, `theme.spacing`, `theme.typography.*`) via the `sx` prop or `styled()` — never hardcode hex or magic pixels, or you break dark mode and the scale.
+**This is the framework-agnostic Material system** — the values (colour roles, type scale, 8px spacing grid, elevation, shape) are the same whether you build with SMUI, m3-svelte, or `@mui/material`. Only the *API for setting and reading them* differs per library (see `frontend-conventions.md`): MUI React uses `createTheme` + tokens like `theme.palette.*`; SMUI uses a Sass theme compiled to CSS custom properties (`var(--mdc-theme-*)`); m3-svelte uses Material 3 design tokens (`--md-sys-color-*`). The code below is shown in the **`@mui`/React** form as the reference idiom.
 
-## The theme object
+> **Material generation:** the default values here are **Material Design 2** (as rendered by `@mui/material` and SMUI). **m3-svelte renders Material 3**, whose token *names* and some values differ (richer role tokens: `primary`/`on-primary`/`surface`/`surface-container`). The *principles* — set once, consume tokens, meet contrast — hold across both.
 
-`createTheme({...})` returns the theme; `<ThemeProvider theme={theme}>` makes it available; `<CssBaseline />` applies its baseline. Access it via the `sx` prop (`sx={{ color: 'primary.main', p: 2 }}`), `styled((theme) => …)`, or the `useTheme()` hook. Key branches: `palette`, `typography`, `spacing`, `shape`, `shadows`, `breakpoints`, `zIndex`, `transitions`, and `components` (default props + style overrides per component).
+The golden rule (every library): **set these once in a theme and consume tokens** — never hardcode hex or magic pixels, or you break dark mode and the scale.
+
+## The theme object (MUI React form)
+
+`createTheme({...})` returns the theme; `<ThemeProvider theme={theme}>` makes it available; `<CssBaseline />` applies its baseline. Access it via the `sx` prop (`sx={{ color: 'primary.main', p: 2 }}`), `styled((theme) => …)`, or the `useTheme()` hook. Key branches: `palette`, `typography`, `spacing`, `shape`, `shadows`, `breakpoints`, `zIndex`, `transitions`, and `components` (default props + style overrides per component). In SMUI the equivalent is the Sass theme file; in m3-svelte, the generated M3 token set — same roles, different plumbing (see `frontend-conventions.md`).
 
 ## Colour
 

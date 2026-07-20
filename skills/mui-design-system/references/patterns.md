@@ -1,8 +1,8 @@
 Source: Material UI (MUI) documentation (https://mui.com/) and Material Design (https://m3.material.io/). MUI is MIT-licensed; Material Design is © Google. Distilled reference — verify against the live source for current detail.
 
-# Material UI (MUI) patterns
+# Material patterns
 
-Patterns are reusable arrangements of components that solve recurring screen-level problems in a consumer or general-purpose app. Build them from the vetted MUI components (see `components.md`) rather than bespoke markup, and style them with theme tokens (see `styles.md`).
+Patterns are **framework-agnostic** reusable arrangements of Material components that solve recurring screen-level problems in a consumer or general-purpose app. Build them from the vetted Material components (see `components.md`) rather than bespoke markup, and style them with theme tokens (see `styles.md`). The component names below (`TextField`, `Dialog`, `AppBar`, …) are the Material components each library provides — the same pattern composes from SMUI, m3-svelte, or `@mui/material` under its own import paths (see `frontend-conventions.md`). A couple of code-idiom notes (e.g. `sx`, `document.title` on React-router navigation) are React examples; the equivalent applies in Svelte.
 
 Overarching rules:
 - Compose from components; don't hand-roll controls a component already provides.

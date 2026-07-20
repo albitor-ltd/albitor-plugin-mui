@@ -1,12 +1,12 @@
 Source: Material UI (MUI) documentation (https://mui.com/) and Material Design (https://m3.material.io/). MUI is MIT-licensed; Material Design is © Google. Distilled reference — verify against the live component API pages for current props and behaviour.
 
-# Material UI (MUI) component inventory
+# Material component inventory
 
-This is the **conformance inventory** for MUI: when a vetted MUI component exists for a need, use it rather than hand-rolling markup (that is the basis of a "no ad-hoc components" check). Components come from `@mui/material` unless a package is noted; icons come from `@mui/icons-material`; the **MUI X** packages (`@mui/x-*`) are separate installs.
+This is the **conformance inventory** for Material: when a vetted Material component exists for a need, use it rather than hand-rolling markup (that is the basis of a "no ad-hoc components" check). The inventory is shown in the **`@mui/material` (React)** form — package names, tags, and import paths below are the React library. **The same Material components exist in the Svelte libraries** (SMUI: one package per component, e.g. `@smui/button`, `@smui/textfield`; m3-svelte: named imports from `m3-svelte`) — map the component name, keep the same accessibility requirement. See `frontend-conventions.md` for the per-framework import paths and the SMUI variant mapping. In the React form, components come from `@mui/material` unless a package is noted; icons from `@mui/icons-material`; the **MUI X** packages (`@mui/x-*`) are separate installs.
 
-General rules that apply to nearly all components:
+General rules that apply to nearly all components (any library):
 
-- Import from the library, don't reinvent: `import Button from '@mui/material/Button'`. Capitalised tags (`<Button>`, `<TextField>`) are MUI; lowercase tags (`<button>`, `<input>`) are raw HTML and usually mean a control that should be an MUI component.
+- Import from the library, don't reinvent: e.g. `import Button from '@mui/material/Button'` (React) / `import Button from '@smui/button'` (SMUI). Capitalised tags (`<Button>`, `<TextField>`) are Material components; lowercase tags (`<button>`, `<input>`) are raw HTML and usually mean a control that should be a Material component.
 - Style via the `sx` prop or `styled()` using **theme tokens** (`theme.palette.*`, `theme.spacing`, `theme.typography.*`), never hardcoded hex/px — so light/dark mode and the scale hold.
 - Form controls need an accessible label: `TextField label=…`, or a `FormLabel`/`InputLabel`; icon-only controls (`IconButton`, `Fab`) need `aria-label`.
 - Don't convey status by colour alone — pair a colour (`color="error"`) with text or an icon.
