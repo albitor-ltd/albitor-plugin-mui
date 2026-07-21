@@ -75,8 +75,11 @@ SMUI themes with **Sass**, not a JS `createTheme`. Create a theme file that sets
 @use '@material/theme/color-palette';
 
 // Brand tokens — the same roles as the MUI palette (styles.md), set once here.
-$primary: #0b5fff;
-$secondary: #00897b;
+// Source these from the app's injected `## Brand colours` system block: set
+// $primary to the brand PRIMARY hex and $secondary to the brand SECONDARY hex.
+// Do NOT ship a default MDC blue — use the app's resolved brand colours.
+$primary: <brand primary hex>;      // from the injected "## Brand colours" block
+$secondary: <brand secondary hex>;  // from the injected "## Brand colours" block
 $error: color-palette.$red-900;
 $background: #fff;      // page
 $surface: #fff;         // cards/sheets (MUI's background.paper)

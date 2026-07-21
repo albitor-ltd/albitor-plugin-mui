@@ -32,7 +32,7 @@ Reference palette tokens, not hex: `theme.palette.primary.main`, `.light`, `.dar
 | Background (surface) | `palette.background.paper` | `#fff` |
 | Divider | `palette.divider` | `rgba(0,0,0,0.12)` |
 
-Set your brand by overriding these: `createTheme({ palette: { primary: { main: '#0b5fff' }, secondary: { main: '#00897b' } } })`. MUI derives `light`/`dark`/`contrastText` automatically, or you can set them explicitly.
+Set your brand by overriding these with the app's resolved brand colours from the injected `## Brand colours` system block — set `primary.main` to the brand PRIMARY hex and `secondary.main` to the brand SECONDARY hex: `createTheme({ palette: { primary: { main: '<brand primary hex>' }, secondary: { main: '<brand secondary hex>' } } })`. Never ship the default MDC blue. MUI derives `light`/`dark`/`contrastText` automatically, or you can set them explicitly.
 
 ### Light and dark mode
 Switch with `palette.mode: 'light' | 'dark'`. In dark mode `background.default`/`paper` go dark and text inverts; because everything reads from tokens, components adapt with no per-component change. Offer a toggle and persist it; seed the initial value from `prefers-color-scheme`. (MUI's newer CSS-variables theming, `cssVariables: true` / `colorSchemes`, lets both schemes coexist without a flash — confirm support for the version in use.)
