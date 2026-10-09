@@ -37,6 +37,16 @@ Material is the **default design system for consumer and general-purpose web app
 
 - `preview/index.html` — a **self-contained, static** kitchen-sink showcasing the core MUI components (app bar, buttons, text fields, selects, checkboxes/radios/switches, chips, cards, tabs, a data table, alerts, a dialog, progress, and a list) on the Material colour/type/elevation/spacing scales. It has **no build step** and opens directly from `file://` in any browser (inline CSS, no external fonts/scripts/CDNs). It is consumed by the create / describe-and-build flow, the review baseline, and the handover pack.
 
+### Preview tokens
+
+`preview-tokens.json` is the small, generic token set Albitor's look preview paints this house style
+from (albitor-ltd/albitor#3070): fonts, a four-step type scale, radius, density, elevation, and the
+text, border, surface, background and accent colours. Albitor validates it against an allow-list at
+ingest (hex colours, px/rem lengths, plain font-family names, fixed enums) and ignores a file that
+fails. The values are the MUI default light theme: Roboto, `body2`/`body1`/`h6`/`h4`
+(0.875/1/1.25/2.125rem), `shape.borderRadius` 4px, `primary.main` #1976d2, and the text and divider
+colours as their opaque equivalents on white.
+
 ## Installing
 
 Add the marketplace that lists this plugin, then install:
