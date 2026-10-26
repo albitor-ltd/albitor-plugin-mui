@@ -1,3 +1,5 @@
+> **Archived 2026-10-26.** Superseded by [albitor-ltd/albitor-plugins](https://github.com/albitor-ltd/albitor-plugins) (`plugins/mui`, tag `mui/v0.2.2`). Read-only.
+
 # Material UI (MUI) plugin (`mui`)
 
 A [Claude Code plugin](https://code.claude.com/docs/en/plugins) that helps you build, audit, and preview **Material Design** interfaces — implemented with the Material component library that fits the app's framework, the app keeping its own framework. It packages the shared Material system (colour, type, spacing, elevation, theming) and component inventory plus **WCAG 2.2 AA accessibility** into skills, commands, an audit agent, an advisory hook, and a self-contained preview page.
